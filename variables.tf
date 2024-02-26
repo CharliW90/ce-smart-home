@@ -23,6 +23,10 @@ variable "key_name" {
   default = "deployer-key"
 }
 
-variable "app_names" {
+variable "public_apps" {
+  type = list(string)
+}
+
+variable "private_apps" {
   type = list(string)
 }

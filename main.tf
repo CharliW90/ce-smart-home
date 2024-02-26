@@ -22,6 +22,12 @@ module "security" {
 
 module "instances" {
   source = "./modules/instances"
+
+  public_apps = var.public_apps
+  private_apps = var.private_apps
+  public_subnets = var.public_subnets
+  private_subnets = var.private_subnets
+  keyPair = var.key_name
 }
 
 # Create different target groups for the services [./modules/load_balancing]
