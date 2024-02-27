@@ -6,6 +6,10 @@ variable "private_apps" {
   type = list(string)
 }
 
+variable "security_group_ids" {
+  type = list(string)
+}
+
 variable "instance_type" {
   type = string
   default = "t2.micro"

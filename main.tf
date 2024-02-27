@@ -28,6 +28,7 @@ module "instances" {
   public_subnets = var.public_subnets
   private_subnets = var.private_subnets
   keyPair = var.key_name
+  security_group_ids = [module.security.public_facing_security_group]
 }
 
 # Create different target groups for the services [./modules/load_balancing]
@@ -35,6 +36,8 @@ module "instances" {
 
 module "load_balancing" {
   source = "./modules/load_balancing"
+
+  
 }
 
 # Creat .env.local file for upload to centralised app
