@@ -7,7 +7,7 @@ resource "aws_instance" "public_app" {
 
   instance_type = var.instance_type
 
-  subnet_id = var.public_subnets[floor(count.index / length(var.public_subnets))]
+  subnet_id = var.public_subnets[count.index % length(var.public_subnets)] # 0,1,2 ...
 
   security_groups = var.security_group_ids
 
@@ -16,7 +16,7 @@ resource "aws_instance" "public_app" {
   key_name = var.keyPair
   
   tags = {
-    Name = "${var.public_apps[(count.index % length(var.public_apps))]}-${floor(count.index / length(var.public_subnets))}"
+    Name = "${var.public_apps[(floor(count.index / length(var.public_apps)) % length(var.public_apps))]}-${count.index % length(var.public_subnets)}"
   }
 }
 
@@ -27,14 +27,14 @@ resource "aws_instance" "private_app" {
 
   instance_type = var.instance_type
 
-  subnet_id = var.private_subnets[floor(count.index / length(var.private_subnets))]
+  subnet_id = var.private_subnets[count.index % length(var.private_subnets)]  #0,1,2 ...
 
   associate_public_ip_address = false
 
   key_name = var.keyPair
-  
+
   tags = {
-    Name = "${var.private_apps[(count.index % length(var.private_apps))]}-${floor(count.index / length(var.private_subnets))}"
+    Name = "${var.private_apps[(floor(count.index / length(var.private_apps)) % length(var.private_apps))]}-${count.index % length(var.private_subnets)}"
   }
 }
 

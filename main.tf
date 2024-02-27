@@ -25,8 +25,8 @@ module "instances" {
 
   public_apps = var.public_apps
   private_apps = var.private_apps
-  public_subnets = var.public_subnets
-  private_subnets = var.private_subnets
+  public_subnets = module.vpc.public_subnets
+  private_subnets = module.vpc.private_subnets
   keyPair = var.key_name
   security_group_ids = [module.security.public_facing_security_group]
 }
@@ -35,9 +35,15 @@ module "instances" {
 # Add load balancing [./modules/load_balancing]
 
 module "load_balancing" {
+  depends_on = [ module.instances ]
   source = "./modules/load_balancing"
 
-  
+  main_vpc_id = module.vpc.vpc_id
+  public_apps = var.public_apps
+  public_app_instances = module.instances.public_app_instance_ids
+  private_apps = var.private_apps
+  private_app_instances = module.instances.private_app_instance_ids
+  health_check_path = "/api/status/health"
 }
 
 # Creat .env.local file for upload to centralised app
