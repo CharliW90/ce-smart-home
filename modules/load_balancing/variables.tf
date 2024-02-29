@@ -2,15 +2,7 @@ variable "public_apps" {
   type = list(string)
 }
 
-variable "public_app_instances" {
-  type = list(string)
-}
-
 variable "private_apps" {
-  type = list(string)
-}
-
-variable "private_app_instances" {
   type = list(string)
 }
 
@@ -55,4 +47,21 @@ variable "health_check_path" {
 variable "health_check_protocol" {
   type = string
   default = "HTTP"
+}
+
+variable "public_security_groups" {
+  type = list(string)
+}
+
+variable "public_subnets" {
+  type = list(string)
+}
+
+variable "private_subnets" {
+  type = list(string)
+}
+
+variable "delete_protect" {
+  type = bool
+  default = false
 }

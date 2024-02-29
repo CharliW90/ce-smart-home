@@ -6,7 +6,11 @@ variable "private_apps" {
   type = list(string)
 }
 
-variable "security_group_ids" {
+variable "public_security_group_ids" {
+  type = list(string)
+}
+
+variable "private_security_group_ids" {
   type = list(string)
 }
 
@@ -24,5 +28,9 @@ variable "private_subnets" {
 }
 
 variable "keyPair" {
+  type = string
+}
+
+variable "root_github_owner" {
   type = string
 }
